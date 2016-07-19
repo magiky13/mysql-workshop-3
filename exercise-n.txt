@@ -705,3 +705,30 @@ select city, country from Address where country = 'Canada' or country = 'Austria
 | Milena         | Japan       |
 +----------------+-------------+
 58 rows in set (0.01 sec)
+
+CODRIN IS EVIL
+
+UPDATE ElectronicMail SET type = CASE when type = 'work' then 'home' when type = 'home' then 'work' end;
+Query OK, 2300 rows affected (0.03 sec)
+Rows matched: 2300  Changed: 2300  Warnings: 0
+
+mysql> select * from ElectronicMail limit 1;
++----+---------+------+-------------------------------------------+
+| id | entryId | type | content                                   |
++----+---------+------+-------------------------------------------+
+|  1 |    5465 | work | lorem.fringilla.ornare@dictumplacerat.com |
++----+---------+------+-------------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> UPDATE ElectronicMail SET type = CASE when type = 'work' then 'home' when type = 'home' then 'work' end;
+Query OK, 1610 rows affected (0.01 sec)
+Rows matched: 2300  Changed: 1610  Warnings: 0
+
+mysql> select * from ElectronicMail limit 1;
++----+---------+------+-------------------------------------------+
+| id | entryId | type | content                                   |
++----+---------+------+-------------------------------------------+
+|  1 |    5465 | home | lorem.fringilla.ornare@dictumplacerat.com |
++----+---------+------+-------------------------------------------+
+1 row in set (0.00 sec)
+

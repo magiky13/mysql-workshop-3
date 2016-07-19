@@ -540,3 +540,15 @@ mysql> select email from Account join AddressBook on Account.id=AddressBook.acco
 1 row in set (0.00 sec)
 
 
+select content from Phone join Entry on Entry.id=Phone.entryId where Entry.firstName = 'Charlotte' and Entry.lastName = 'Jenkins';                                     
++----------------+
+| content        |
++----------------+
+| (110) 167-3420 |
+| (605) 175-1334 |
++----------------+
+2 rows in set (0.00 sec)
+
+
+e7
+select distinct substring_index(content, '@',-1) from ElectronicMail;

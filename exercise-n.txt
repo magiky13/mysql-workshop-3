@@ -197,3 +197,5 @@ mysql> describe ElectronicMail;
 | content | varchar(255)                | YES  |     | NULL    |                |
 +---------+-----------------------------+------+-----+---------+----------------+
 4 rows in set (0.00 sec)
+
+//e2 importing captn

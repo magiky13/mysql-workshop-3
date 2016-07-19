@@ -41,10 +41,159 @@ mysql> select count(id) from Entry where type = 'home' and subtype = 'phone' and
 +-----------+
 1 row in set (0.00 sec)
 
-mysql> select count(*) from Entry where type = 'work' and subtype = 'phone' and contentLineOne like '1-%';                                                           
-+----------+
-| count(*) |
-+----------+
-|       60 |
-+----------+
-1 row in set (0.00 sec)
+mysql> select count(id) from Entry where type = 'work' and subtype = 'phone' and contentLineOne like '1-%';
++-----------+
+| count(id) |
++-----------+
+|        60 |
++-----------+
+1 row in set (0.01 sec)
+
+Making structure
+
+mysql> use decodemtl_addressbook;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table Account(id INT AUTO_INCREMENT PRIMARY KEY);                                                                                                         
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table AddressBook(id INT AUTO_INCREMENT PRIMARY KEY);                
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table Entry(id INT AUTO_INCREMENT PRIMARY KEY);                      
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table Phone(id INT AUTO_INCREMENT PRIMARY KEY);                      
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table Address(id INT AUTO_INCREMENT PRIMARY KEY);                    
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table ElectronicMail(id INT AUTO_INCREMENT PRIMARY KEY);             
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| Address                         |
+| AddressBook                     |
+| ElectronicMail                  |
+| Entry                           |
+| Phone                           |
++---------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Account ADD COLUMN email varchar(255) add column password varchar(225) add column createdOn datetime add column modifiedOn timestamp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column password varchar(225) add column createdOn datetime add column modifi' at line 1
+mysql> ALTER TABLE Account ADD COLUMN email varchar(255), add column password varch
+ar(225), add column createdOn datetime, add column modifiedOn timestamp;           
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Account;
++------------+--------------+------+-----+-------------------+-----------------------------+
+| Field      | Type         | Null | Key | Default           | Extra                       |
++------------+--------------+------+-----+-------------------+-----------------------------+
+| id         | int(11)      | NO   | PRI | NULL              | auto_increment              |
+| email      | varchar(255) | YES  |     | NULL              |                             |
+| password   | varchar(225) | YES  |     | NULL              |                             |
+| createdOn  | datetime     | YES  |     | NULL              |                             |
+| modifiedOn | timestamp    | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++------------+--------------+------+-----+-------------------+-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Account ADD COLUMN email varchar(255), add column password varch
+    -> ar(225), add column createdOn datetime, add column modifiedOn timestamp; \c
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varch
+ar(225), add column createdOn datetime, add column modifiedOn timestamp' at line 1
+mysql> ALTER TABLE Account ADD COLUMN email varchar(255), add column password varch
+    -> ar(225), add column createdOn datetime, add column modifiedOn timestamp;\c
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varch
+ar(225), add column createdOn datetime, add column modifiedOn timestamp' at line 1
+mysql> alter table AddressBook add column accountId int, add column name varchar(255), add column createdOn datetime, add column modifiedOn timestamp;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe AddressBook;
++------------+--------------+------+-----+-------------------+-----------------------------+
+| Field      | Type         | Null | Key | Default           | Extra                       |
++------------+--------------+------+-----+-------------------+-----------------------------+
+| id         | int(11)      | NO   | PRI | NULL              | auto_increment              |
+| accountId  | int(11)      | YES  |     | NULL              |                             |
+| name       | varchar(255) | YES  |     | NULL              |                             |
+| createdOn  | datetime     | YES  |     | NULL              |                             |
+| modifiedOn | timestamp    | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++------------+--------------+------+-----+-------------------+-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table Entry add column addressBookId int, add column firstName varchar(255), add column lastName varchar(255), add column birthday datetime, add column type enum('phone', 'address', 'electronic-mail');
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Entry;
++---------------+-------------------------------------------+------+-----+---------+----------------+
+| Field         | Type                                      | Null | Key | Default | Extra          |
++---------------+-------------------------------------------+------+-----+---------+----------------+
+| id            | int(11)                                   | NO   | PRI | NULL    | auto_increment |
+| addressBookId | int(11)                                   | YES  |     | NULL    |                |
+| firstName     | varchar(255)                              | YES  |     | NULL    |                |
+| lastName      | varchar(255)                              | YES  |     | NULL    |                |
+| birthday      | datetime                                  | YES  |     | NULL    |                |
+| type          | enum('phone','address','electronic-mail') | YES  |     | NULL    |                |
++---------------+-------------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table Phone add column entryId int, add column type enum('home', 'work', 'other'), add column subtype enum('landline', 'cellular', 'fax'), add column content varchar(255);Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Entry;
++---------------+-------------------------------------------+------+-----+---------+----------------+
+| Field         | Type                                      | Null | Key | Default | Extra          |
++---------------+-------------------------------------------+------+-----+---------+----------------+
+| id            | int(11)                                   | NO   | PRI | NULL    | auto_increment |
+| addressBookId | int(11)                                   | YES  |     | NULL    |                |
+| firstName     | varchar(255)                              | YES  |     | NULL    |                |
+| lastName      | varchar(255)                              | YES  |     | NULL    |                |
+| birthday      | datetime                                  | YES  |     | NULL    |                |
+| type          | enum('phone','address','electronic-mail') | YES  |     | NULL    |                |
++---------------+-------------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table Address add column entryId int, add column type enum('home', 'work', 'other'), add column addressLine1 varchar(255), add column addressLine2 VARCHAR(255), add column city varchar(255), add column province varchar(128), add column country varchar(128), add column postalCode varchar(10);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Address;
++--------------+-----------------------------+------+-----+---------+----------------+
+| Field        | Type                        | Null | Key | Default | Extra          |
++--------------+-----------------------------+------+-----+---------+----------------+
+| id           | int(11)                     | NO   | PRI | NULL    | auto_increment |
+| entryId      | int(11)                     | YES  |     | NULL    |                |
+| type         | enum('home','work','other') | YES  |     | NULL    |                |
+| addressLine1 | varchar(255)                | YES  |     | NULL    |                |
+| addressLine2 | varchar(255)                | YES  |     | NULL    |                |
+| city         | varchar(255)                | YES  |     | NULL    |                |
+| province     | varchar(128)                | YES  |     | NULL    |                |
+| country      | varchar(128)                | YES  |     | NULL    |                |
+| postalCode   | varchar(10)                 | YES  |     | NULL    |                |
++--------------+-----------------------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> alter table ElectronicMail add column entryId int, add column type enum('home', 'work', 'other'), add column content varchar(255);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe ElectronicMail;
++---------+-----------------------------+------+-----+---------+----------------+
+| Field   | Type                        | Null | Key | Default | Extra          |
++---------+-----------------------------+------+-----+---------+----------------+
+| id      | int(11)                     | NO   | PRI | NULL    | auto_increment |
+| entryId | int(11)                     | YES  |     | NULL    |                |
+| type    | enum('home','work','other') | YES  |     | NULL    |                |
+| content | varchar(255)                | YES  |     | NULL    |                |
++---------+-----------------------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)

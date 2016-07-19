@@ -1,0 +1,50 @@
+e1 
+select count(*), accountId from AddressBook group by accountId order by count(*) desc limit 1;
++----------+-----------+
+| count(*) | accountId |
++----------+-----------+
+|       19 |         5 |
+|       19 |        14 |
+|       18 |        58 |
+|       18 |        42 |
+|       17 |         2 |
++----------+-----------+
+
+select count(*), addressbookId from Entry group by addressbookId order by count(*) desc limit 5;
++----------+---------------+
+| count(*) | addressbookId |
++----------+---------------+
+|       52 |            37 |
+|       50 |            20 |
+|       49 |            50 |
+|       48 |             8 |
+|       48 |            89 |
++----------+---------------+
+5 rows in set (0.00 sec)
+
+
+
+e2
+mysql> select count(id) from Entry where subtype = 'phone' and contentLineOne like '(3%';
++-----------+
+| count(id) |
++-----------+
+|        39 |
++-----------+
+1 row in set (0.01 sec)
+
+mysql> select count(id) from Entry where type = 'home' and subtype = 'phone' and contentLineOne not like '%5%';                                                      
++-----------+
+| count(id) |
++-----------+
+|        76 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from Entry where type = 'work' and subtype = 'phone' and contentLineOne like '1-%';                                                           
++----------+
+| count(*) |
++----------+
+|       60 |
++----------+
+1 row in set (0.00 sec)

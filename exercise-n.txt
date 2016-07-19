@@ -552,3 +552,13 @@ select content from Phone join Entry on Entry.id=Phone.entryId where Entry.first
 
 e7
 select distinct substring_index(content, '@',-1) from ElectronicMail;
+
+e8
+select count(subtype) from Phone join Entry on Entry.id=Phone.entryId where (birthday > '1950-10' and birthday < '1960-10'); 
++----------------+
+| count(subtype) |
++----------------+
+|            442 |
++----------------+
+1 row in set, 2 warnings (0.01 sec)
+
